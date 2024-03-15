@@ -71,7 +71,7 @@ function addTask() {
 function createDeleteButton (parent) {
 
     let deleteButton = document.createElement("BUTTON");
-    let symbolOfDelete = document.createTextNode("\u00D7");
+    let symbolOfDelete = document.createTextNode("\u2716");
     deleteButton.className = "delete";
     deleteButton.appendChild(symbolOfDelete);
     parent.appendChild(deleteButton);
