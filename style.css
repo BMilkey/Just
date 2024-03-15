@@ -28,6 +28,7 @@ h3 {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding-left: 2%;
+  margin-bottom: 0;
 }
 
 #priority {
@@ -63,6 +64,7 @@ ul {
 li {
   list-style-type: none;
   position: relative;
+  padding: 1%;
 }
 
 li:nth-child(even) {
