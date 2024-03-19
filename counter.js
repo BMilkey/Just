@@ -1,4 +1,4 @@
-export function createDialogWindow(parent, dialogButton, nameParent, userInfo) {
+function createDialogWindow(parent, dialogButton, nameParent, userInfo) {
 
     let dialog = document.createElement("DIALOG");
     dialog.id = "dialog" + parent.id;
@@ -8,6 +8,7 @@ export function createDialogWindow(parent, dialogButton, nameParent, userInfo) {
     dialog.appendChild(form);
 
     let divTitle = document.createElement("DIV");
+    divTitle.className = "divTitle";
     form.appendChild(divTitle);
 
     let h4 = document.createElement("H4");
@@ -43,6 +44,7 @@ export function createDialogWindow(parent, dialogButton, nameParent, userInfo) {
     getInformation(userInfo, allAttributes, divInformation);
 
     let divButtons = document.createElement("DIV");
+    divButtons.className = "divButtons";
     form.appendChild(divButtons);
 
     let cancelButton = document.createElement("BUTTON");
@@ -95,7 +97,7 @@ function getInformation(userInfo, allAttributes, parent) {
         if (attribute === "address") {
 
             let addressAttributes = ["street", "suite", "city", "zipcode"];
-            let addressInfo = "Address:";
+            let addressInfo = "⠀Address:";
 
             for (let j = 0; j < 4; j++) {
                 addressInfo += " " + addressAttributes[j][0].toUpperCase() + addressAttributes[j].slice(1) + "(" +
@@ -110,7 +112,7 @@ function getInformation(userInfo, allAttributes, parent) {
         } else if (attribute === "company") {
 
             let companyAttributes = ["name", "catchPhrase", "bs"];
-            let companyInfo = "Company:";
+            let companyInfo = "⠀Company:";
 
             for (let j = 0; j < 3; j++) {
                 companyInfo += " " + companyAttributes[j][0].toUpperCase() + companyAttributes[j].slice(1) + "(" +
@@ -124,7 +126,7 @@ function getInformation(userInfo, allAttributes, parent) {
 
         } else {
 
-            userAttribute.textContent = attribute[0].toUpperCase() + attribute.slice(1) + ": " + userInfo[attribute];
+            userAttribute.textContent = "⠀" + attribute[0].toUpperCase() + attribute.slice(1) + ": " + userInfo[attribute];
             parent.appendChild(userAttribute);
 
         }

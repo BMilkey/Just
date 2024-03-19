@@ -49,8 +49,6 @@ function createTasks(arrayOfObjects) {
         li.id = oneObject.id;
 
         li.draggable = true;
-        //li.addEventListener("dragstart", (event) =>
-        //dragstartHandler);
 
         document.getElementById("mainSpace").appendChild(li);
 

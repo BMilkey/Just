@@ -109,6 +109,8 @@ dialog {
   width: 50%;
   height: 70%;
   background-color: #FFBF69;
+  padding: 0;
+  border-radius: 20px;
 }
 
 .changeButton {
@@ -116,7 +118,10 @@ dialog {
 }
 
 .divInput {
+  text-align: center;
   position: relative;
+  margin-bottom: 2%;
+  margin-top: 2%;
 }
 
 h4 {
@@ -131,4 +136,13 @@ h4 {
 #mainSpace {
   height: 100%;
   width: 100%;
+}
+
+.divButtons {
+  text-align: center;
+}
+
+.divTitle {
+  background-color: #FF9F1C;
+  padding-top: 2%;
 }
