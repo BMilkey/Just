@@ -2,57 +2,57 @@
 
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To do list</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To do list</title>
 
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
 
-    <script type="text/javascript" src="bootstrap.min.js"></script>
-  </head>
+  <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
 
-  <body>
+<body>
 
-    <div class="container">
+<div class="container">
 
-      <div class="row" id="title">
-        <h1>My To Do</h1>
-      </div>
+  <div class="row" id="title">
+    <h1>My To Do</h1>
+  </div>
 
-      <div class="row">
+  <div class="row">
 
-        <label for="inputNameTask"></label><input class="col-md-11" id="inputNameTask" type="text"
-                                                  placeholder="No more than 45 symbols..."/>
+    <label for="inputNameTask"></label><input class="col-md-11" id="inputNameTask" type="text"
+                                              placeholder="No more than 45 symbols..."/>
 
-        <div class="col-md-1 ">
-          <button id="add-btn" class="addButton">Add</button>
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="col-md-6" id="priority">
-          <h3>Priority tasks</h3>
-          <ul>
-
-          </ul>
-        </div>
-
-        <div class="col-md-6" id="other">
-          <h3>Other tasks</h3>
-          <ul id="mainSpace">
-          </ul>
-        </div>
-
-      </div>
-
+    <div class="col-md-1 ">
+      <button id="add-btn" class="addButton">Add</button>
     </div>
 
-    <script type="module" src="./main.js"></script>
+  </div>
 
-  </body>
+  <div class="row">
+
+    <div class="col-md-6" id="priority" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+      <h3>Priority tasks</h3>
+      <ul>
+
+      </ul>
+    </div>
+
+    <div class="col-md-6" id="other" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+      <h3>Other tasks</h3>
+      <ul id="mainSpace">
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module" src="./main.js"></script>
+
+</body>
 
 </html>

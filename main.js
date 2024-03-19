@@ -1,4 +1,6 @@
 import './style.css'
+import {createDialogWindow} from "./counter.js";
+
 
 const btn =  document.getElementById('add-btn');
 btn.onclick = addTask;
@@ -22,22 +24,30 @@ function createTasks(arrayOfObjects) {
 
         let li = document.createElement("li");
         let oneObject = arrayOfObjects[element];
-        let nameTask = document.createTextNode("⠀" + oneObject.title[0].toUpperCase() +
-            oneObject.title.slice(1));
+        let nameTask = "⠀" + oneObject.title[0].toUpperCase() +
+            oneObject.title.slice(1);
+        let task = document.createTextNode(nameTask);
 
-        let input = document.createElement("INPUT");
+        li.className = "user" + oneObject.userId;
+
+        let input = document.createElement("input");
         input.type = "checkbox";
         input.checked = oneObject.completed;
 
         li.appendChild(input);
-        li.appendChild(nameTask);
+        li.appendChild(task);
 
         li.id = oneObject.id;
+
         li.draggable = true;
+        //li.addEventListener("dragstart", (event) =>
+        //dragstartHandler);
 
         document.getElementById("mainSpace").appendChild(li);
 
         createDeleteButton(li);
+        createDialogButton(li, nameTask);
+
     }
 
 }
@@ -49,7 +59,7 @@ function addTask() {
     let nameTask = document.createTextNode("⠀" + inputValue[0].toUpperCase() +
         inputValue.slice(1));
 
-    let input = document.createElement("INPUT");
+    let input = document.createElement("input");
     input.type = "checkbox";
 
     li.appendChild(input);
@@ -66,11 +76,12 @@ function addTask() {
     document.getElementById("inputNameTask").value = "";
 
     createDeleteButton(li);
+    createDialogButton(li);
 }
 
 function createDeleteButton (parent) {
 
-    let deleteButton = document.createElement("BUTTON");
+    let deleteButton = document.createElement("button");
     let symbolOfDelete = document.createTextNode("\u2716");
     deleteButton.className = "delete";
     deleteButton.appendChild(symbolOfDelete);
@@ -83,3 +94,36 @@ function deleteTask() {
     let div = this.parentElement;
     div.style.display = "none";
 }
+
+function createDialogButton(parent, nameParent) {
+
+    let dialogButton = document.createElement("button");
+    let symbolOfDialog = document.createTextNode("\u270E");
+    dialogButton.className = "dialogButton";
+    dialogButton.id = "dialogButton" + parent.id;
+    dialogButton.appendChild(symbolOfDialog);
+    parent.appendChild(dialogButton);
+
+    createDialogWindow(parent, dialogButton, nameParent);
+}
+
+/*function dragstartHandler(ev) {
+    // Add the target element's id to the data transfer object
+    ev.dataTransfer.setData("application/x-moz-node", ev.target.id);
+    ev.dataTransfer.effectAllowed = "move";
+    console.log(1)
+}
+
+function dragoverHandler(ev) {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = "move";
+    console.log(2)
+}
+
+function dropHandler(ev) {
+    ev.preventDefault();
+    // Get the id of the target and add the moved element to the target's DOM
+    const data = ev.dataTransfer.getData("application/x-moz-node");
+    ev.target.appendChild(document.getElementById(data));
+    console.log(3)
+}*/

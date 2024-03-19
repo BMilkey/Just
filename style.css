@@ -77,14 +77,12 @@ li:nth-child(odd) {
 
 .delete {
   background-color: #FF9F1C;
-  border-width: 1px;
+  border-width: 0;
   width: 7%;
   height: 100%;
   position: absolute;
   right: 0;
   top: 0;
-  border-color: #2EC4B6;
-  border-style: solid;
   transition: 0.8s;
 }
 
@@ -92,3 +90,35 @@ li:nth-child(odd) {
   background-color: #FFBF69;
 }
 
+.dialogButton {
+  background-color: #CBF3F0;
+  width: 7%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  border-width: 0;
+  transition: 0.8s;
+  right: 7%;
+}
+
+.dialogButton:hover {
+  background-color: #2EC4B6;
+}
+
+dialog {
+  width: 50%;
+  height: 60%;
+  background-color: #FFBF69;
+}
+
+.changeButton {
+  position: absolute;
+}
+
+.divInput {
+  position: relative;
+}
+
+h4 {
+  text-align: center;
+}
