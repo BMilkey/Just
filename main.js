@@ -1,10 +1,19 @@
 import './style.css'
-import {createDialogWindow} from "./counter.js";
+import {setUser} from "./counter.js";
 
 
 const btn =  document.getElementById('add-btn');
 btn.onclick = addTask;
-// btn.addEventListener('click', addTask);
+
+const priority =  document.getElementById('priority');
+priority.ondrop = dropHandler;
+priority.ondragover = dragoverHandler;
+priority.ondragstart = dragstartHandler;
+
+const other =  document.getElementById('other');
+other.ondrop = dropHandler;
+other.ondragover = dragoverHandler;
+other.ondragstart = dragstartHandler;
 
 let requestURL = "https://jsonplaceholder.typicode.com/todos";
 let request = new XMLHttpRequest();
@@ -22,15 +31,15 @@ function createTasks(arrayOfObjects) {
 
     for (let element in arrayOfObjects) {
 
-        let li = document.createElement("li");
+        let li = document.createElement("LI");
         let oneObject = arrayOfObjects[element];
         let nameTask = "⠀" + oneObject.title[0].toUpperCase() +
             oneObject.title.slice(1);
         let task = document.createTextNode(nameTask);
 
-        li.className = "user" + oneObject.userId;
+        li.className = oneObject.userId;
 
-        let input = document.createElement("input");
+        let input = document.createElement("INPUT");
         input.type = "checkbox";
         input.checked = oneObject.completed;
 
@@ -54,12 +63,12 @@ function createTasks(arrayOfObjects) {
 
 function addTask() {
 
-    let li = document.createElement("li");
+    let li = document.createElement("LI");
     let inputValue = document.getElementById("inputNameTask").value;
     let nameTask = document.createTextNode("⠀" + inputValue[0].toUpperCase() +
         inputValue.slice(1));
 
-    let input = document.createElement("input");
+    let input = document.createElement("INPUT");
     input.type = "checkbox";
 
     li.appendChild(input);
@@ -81,7 +90,7 @@ function addTask() {
 
 function createDeleteButton (parent) {
 
-    let deleteButton = document.createElement("button");
+    let deleteButton = document.createElement("BUTTON");
     let symbolOfDelete = document.createTextNode("\u2716");
     deleteButton.className = "delete";
     deleteButton.appendChild(symbolOfDelete);
@@ -97,19 +106,20 @@ function deleteTask() {
 
 function createDialogButton(parent, nameParent) {
 
-    let dialogButton = document.createElement("button");
+    let dialogButton = document.createElement("BUTTON");
     let symbolOfDialog = document.createTextNode("\u270E");
     dialogButton.className = "dialogButton";
     dialogButton.id = "dialogButton" + parent.id;
     dialogButton.appendChild(symbolOfDialog);
     parent.appendChild(dialogButton);
 
-    createDialogWindow(parent, dialogButton, nameParent);
+    setUser(parent, dialogButton, nameParent);
+    //createDialogWindow(parent, dialogButton, nameParent);
 }
 
-/*function dragstartHandler(ev) {
+function dragstartHandler(ev) {
     // Add the target element's id to the data transfer object
-    ev.dataTransfer.setData("application/x-moz-node", ev.target.id);
+    ev.dataTransfer.setData("text", ev.target.id);
     ev.dataTransfer.effectAllowed = "move";
     console.log(1)
 }
@@ -117,13 +127,26 @@ function createDialogButton(parent, nameParent) {
 function dragoverHandler(ev) {
     ev.preventDefault();
     ev.dataTransfer.dropEffect = "move";
-    console.log(2)
 }
 
 function dropHandler(ev) {
     ev.preventDefault();
     // Get the id of the target and add the moved element to the target's DOM
-    const data = ev.dataTransfer.getData("application/x-moz-node");
-    ev.target.appendChild(document.getElementById(data));
-    console.log(3)
-}*/
+    const data = ev.dataTransfer.getData("text");
+    const transferingElement =  document.getElementById(data);
+
+    if (ev.target.id === "prioritySpace" || ev.target.id === "mainSpace") {
+
+        ev.target.appendChild(transferingElement);
+
+    } else if (ev.target.tagName === "H3") {
+
+        ev.target.parentElement.getElementsByTagName("UL")[0].appendChild(transferingElement);
+
+    } else if (!isNaN(ev.target.id) && (typeof +ev.target.id === "number") && (ev.target.type !== "checkbox") &&
+        (ev.target.className !== "delete")) {
+
+        ev.target.parentElement.appendChild(transferingElement);
+
+    }
+}

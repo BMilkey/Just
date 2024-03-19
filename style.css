@@ -107,7 +107,7 @@ li:nth-child(odd) {
 
 dialog {
   width: 50%;
-  height: 60%;
+  height: 70%;
   background-color: #FFBF69;
 }
 
@@ -121,4 +121,14 @@ dialog {
 
 h4 {
   text-align: center;
+}
+
+#prioritySpace {
+  height: 100%;
+  width: 100%;
+}
+
+#mainSpace {
+  height: 100%;
+  width: 100%;
 }
