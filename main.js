@@ -103,8 +103,8 @@ function createDeleteButton (parent) {
 }
 
 function deleteTask() {
-    let div = this.parentElement;
-    div.style.display = "none";
+    let li = this.parentElement;
+    li.remove();
 }
 
 function createDialogButton(parent, nameParent, check) {
