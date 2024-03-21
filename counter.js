@@ -1,7 +1,13 @@
-function createDialogWindow(parent, dialogButton, nameParent, userInfo) {
+export function createDialogWindow(parent, dialogButton, nameParent, userInfo) {
 
     let dialog = document.createElement("DIALOG");
-    dialog.id = "dialog" + parent.id;
+
+    if (userInfo === 1) {
+        dialog.className = "dialogForAddedTask";
+    } else {
+        dialog.id = "dialog" + parent.id;
+    }
+
     document.body.appendChild(dialog);
 
     let form = document.createElement("FORM");
@@ -27,39 +33,61 @@ function createDialogWindow(parent, dialogButton, nameParent, userInfo) {
     divInput.appendChild(label);
 
     let input = document.createElement("INPUT");
-    input.id = "changeNameTask";
+    input.className = "changeNameTask";
     input.type = "text";
-    input.placeholder = "You can change name of the task.";
+    input.placeholder = "You can change a name of the task.";
     divInput.appendChild(input);
 
     let changeButton = document.createElement("BUTTON");
     changeButton.className = "changeButton";
     changeButton.innerHTML = "Change";
+    changeButton.type = "button";
+
+    changeButton.addEventListener("click", () => {
+
+        if (input.value === "") {
+            alert("Need to enter something!");
+        } else if (input.value.length > 45) {
+            alert("Too many symbols! Try again");
+        } else {
+            h4.innerHTML = input.value[0].toUpperCase() + input.value.slice(1);
+        }
+
+        input.value = "";
+    })
+
     divInput.appendChild(changeButton);
 
     let divInformation = document.createElement("DIV");
     form.appendChild(divInformation);
 
-    let allAttributes = ["name", "username", "email", "address", "phone", "website", "company"];
-    getInformation(userInfo, allAttributes, divInformation);
+    if (userInfo !== 1) {
+
+        let allAttributes = ["name", "username", "email", "address", "phone", "website", "company"];
+        getInformation(userInfo, allAttributes, divInformation);
+
+    } else {
+
+        let p = document.createElement("P");
+
+        p.textContent = "⠀ " + "Information not found";
+        p.className = "addedInformation";
+
+        divInformation.appendChild(p);
+
+    }
 
     let divButtons = document.createElement("DIV");
     divButtons.className = "divButtons";
     form.appendChild(divButtons);
 
-    let cancelButton = document.createElement("BUTTON");
-    cancelButton.value = "cancel";
-    cancelButton.formMethod = "dialog";
-    cancelButton.innerHTML = "Cancel";
-    divButtons.appendChild(cancelButton);
+    let backButton = document.createElement("BUTTON");
+    backButton.className = "backButton";
+    backButton.formMethod = "dialog";
+    backButton.innerHTML = "Back";
+    divButtons.appendChild(backButton);
 
-    let confirmButton = document.createElement("BUTTON");
-    confirmButton.id = "confirmButton";
-    confirmButton.value = "default";
-    confirmButton.innerHTML = "Confirm";
-    divButtons.appendChild(confirmButton);
-
-    let output = document.createElement("OUTPUT");
+    //let output = document.createElement("OUTPUT");
 
     dialogButton.addEventListener("click", () => {
         dialog.showModal();
@@ -79,7 +107,7 @@ export function setUser(parent, dialogButton, nameParent) {
     request.onload = () => {
         let listOfUsers = request.response;
 
-        let order = +parent.className;
+        let order = +parent.className - 1;
         let user = listOfUsers[order];
 
         createDialogWindow(parent, dialogButton, nameParent, user);
@@ -97,7 +125,7 @@ function getInformation(userInfo, allAttributes, parent) {
         if (attribute === "address") {
 
             let addressAttributes = ["street", "suite", "city", "zipcode"];
-            let addressInfo = "⠀Address:";
+            let addressInfo = "⠀ Address:";
 
             for (let j = 0; j < 4; j++) {
                 addressInfo += " " + addressAttributes[j][0].toUpperCase() + addressAttributes[j].slice(1) + "(" +
@@ -112,7 +140,7 @@ function getInformation(userInfo, allAttributes, parent) {
         } else if (attribute === "company") {
 
             let companyAttributes = ["name", "catchPhrase", "bs"];
-            let companyInfo = "⠀Company:";
+            let companyInfo = "⠀ Company:";
 
             for (let j = 0; j < 3; j++) {
                 companyInfo += " " + companyAttributes[j][0].toUpperCase() + companyAttributes[j].slice(1) + "(" +
@@ -126,7 +154,7 @@ function getInformation(userInfo, allAttributes, parent) {
 
         } else {
 
-            userAttribute.textContent = "⠀" + attribute[0].toUpperCase() + attribute.slice(1) + ": " + userInfo[attribute];
+            userAttribute.textContent = "⠀ " + attribute[0].toUpperCase() + attribute.slice(1) + ": " + userInfo[attribute];
             parent.appendChild(userAttribute);
 
         }

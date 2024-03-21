@@ -1,5 +1,5 @@
 import './style.css'
-import {setUser} from "./counter.js";
+import {setUser, createDialogWindow} from "./counter.js";
 
 
 const btn =  document.getElementById('add-btn');
@@ -53,7 +53,7 @@ function createTasks(arrayOfObjects) {
         document.getElementById("mainSpace").appendChild(li);
 
         createDeleteButton(li);
-        createDialogButton(li, nameTask);
+        createDialogButton(li, nameTask, 1);
 
     }
 
@@ -63,17 +63,20 @@ function addTask() {
 
     let li = document.createElement("LI");
     let inputValue = document.getElementById("inputNameTask").value;
-    let nameTask = document.createTextNode("⠀" + inputValue[0].toUpperCase() +
-        inputValue.slice(1));
+    let name = "⠀" + inputValue[0].toUpperCase() + inputValue.slice(1);
+    let nameTask = document.createTextNode(name);
 
     let input = document.createElement("INPUT");
     input.type = "checkbox";
+
+    li.draggable = true;
+    li.id = name;
 
     li.appendChild(input);
     li.appendChild(nameTask);
 
     if (inputValue === "") {
-        alert("Нужно что-то ввести!");
+        alert("Need to enter something!");
     } else if (inputValue.length > 45) {
         alert("Too many symbols! Try again");
     } else {
@@ -82,8 +85,10 @@ function addTask() {
 
     document.getElementById("inputNameTask").value = "";
 
+    li.className = "addedTask";
+
     createDeleteButton(li);
-    createDialogButton(li);
+    createDialogButton(li, name, 0);
 }
 
 function createDeleteButton (parent) {
@@ -102,34 +107,46 @@ function deleteTask() {
     div.style.display = "none";
 }
 
-function createDialogButton(parent, nameParent) {
+function createDialogButton(parent, nameParent, check) {
 
     let dialogButton = document.createElement("BUTTON");
     let symbolOfDialog = document.createTextNode("\u270E");
     dialogButton.className = "dialogButton";
-    dialogButton.id = "dialogButton" + parent.id;
+
     dialogButton.appendChild(symbolOfDialog);
     parent.appendChild(dialogButton);
 
-    setUser(parent, dialogButton, nameParent);
-    //createDialogWindow(parent, dialogButton, nameParent);
+    if (check) {
+
+        dialogButton.id = "dialogButton" + parent.id;
+        setUser(parent, dialogButton, nameParent);
+
+    } else {
+
+        createDialogWindow(parent, dialogButton, nameParent, 1);
+
+    }
+
 }
 
 function dragstartHandler(ev) {
-    // Add the target element's id to the data transfer object
+
     ev.dataTransfer.setData("text", ev.target.id);
     ev.dataTransfer.effectAllowed = "move";
-    console.log(1)
+
 }
 
 function dragoverHandler(ev) {
+
     ev.preventDefault();
     ev.dataTransfer.dropEffect = "move";
+
 }
 
 function dropHandler(ev) {
+
     ev.preventDefault();
-    // Get the id of the target and add the moved element to the target's DOM
+
     const data = ev.dataTransfer.getData("text");
     const transferingElement =  document.getElementById(data);
 
