@@ -1,4 +1,3 @@
-import './style.css'
 import {setUser, createDialogWindow} from "./counter.js";
 
 
